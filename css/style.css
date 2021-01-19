@@ -8,7 +8,7 @@ html {
 body {
   background: -moz-linear-gradient(top, #a7cfdf 0%, #23538a 100%);
   background: -webkit-linear-gradient(top, #a7cfdf 0%, #23538a 100%);
-  background: #EFE6E6;
+  background: #8198ff;
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', endColorstr='#23538a', GradientType=0);
 
   background-attachment:fixed;
@@ -17,7 +17,7 @@ overflow: auto;
 }
 
 .idc{
-	margin-top: 100px;
+	/* margin-top: 100px; */
 	text-align: center;	
 }
 

@@ -1,3 +1,5 @@
+const shuffleQuestions = false;
+
 var team1 = window.opener.document.getElementById("team1NAME").value;
 var team2 = window.opener.document.getElementById("team2NAME").value;
 
@@ -28,7 +30,7 @@ var app = {
 			   "<div id='missTeam1_2' class= 'miss'>X</div>"+
 			   "<div id='missTeam1_1' class= 'miss'>X</div>"+
                "<div id='awardTeam1' data-team='1' class='button'>" + team1 + "</div>"+
-               "<div id='newQuestion' class='button'>AGÜ YARIŞIYOR</div>"+
+               "<div id='newQuestion' class='button'>Pioneer Feud</div>"+
                "<div id='awardTeam2' data-team='2'class='button'>" + team2 + "</div>"+
 			   "<div id='missTeam2_1' class= 'miss'>X</div>"+
 			   "<div id='missTeam2_2' class= 'miss'>X</div>"+
@@ -54,7 +56,11 @@ var app = {
     //console.clear()
     app.allData   = data
     app.questions = Object.keys(data)
-    app.shuffle(app.questions)
+    
+    if(shuffleQuestions == true)
+    {
+      app.shuffle(app.questions);
+    }
     app.makeQuestion(app.currentQ)
     $('body').append(app.board)
   },
@@ -216,13 +222,13 @@ var app = {
 		var team2Score = document.getElementById("team2").innerHTML;
 		
 		if(team1Score>team2Score){
-			winner = "Kazanan " + team1 + "Takımı";
+			winner = "Winner " + team1;
 		}
 		else if(team1Score<team2Score){
-			winner = "Kazanan " + team2 + "Takımı";
+			winner = "Winner " + team2;
 		}
 		else{
-			winner = "Bu mükemmel yarışın kazananı her iki takım!";
+			winner = "Both teams won this tie!";
 		}
 		return winner;
 	}
