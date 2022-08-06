@@ -60,7 +60,6 @@ var app = {
 		if (shuffleQuestions == true) {
 			app.shuffle(app.questions);
 		}
-		// app.makeQuestion(app.currentQ)
 		$('body').append(app.board)
 	},
 	
@@ -139,7 +138,7 @@ var app = {
 			app.getBoardScore(this.id)
 		}
 		window.opener.GetQuestion(qText);
-		window.opener.GetAnswers(qAnswr, app.currentQ + 1, app.questions.length);
+		window.opener.GetAnswers(qAnswr, app.currentQ, app.questions.length);
 		cardHolders.on('click', showCard)
 	},
 	
@@ -209,9 +208,7 @@ var app = {
 	},
 	
 	changeQuestion: function () {
-		app.currentQ++
-		app.makeQuestion(app.currentQ)
-		// window.opener.GetAnswers(qAnswr, app.currentQ, currentQ);
+		app.makeQuestion(app.currentQ++)
 	},
 	
 	// Inital function

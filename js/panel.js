@@ -6,6 +6,7 @@ var whichTeamTurn = -1;
 var missPointTeam1 = 0;
 var missPointTeam2 = 0;
 var steal = false;
+var pointsAwarded = false;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
@@ -110,9 +111,12 @@ var successfulAnswers = 0;
 		game.app.changeQuestion();
 		steal = false;
 		successfulAnswers = 0;
+		pointsAwarded = false;
 	}
 	
 	function calculatePoints(team){
+		if (pointsAwarded) return;
+		
 		if (team == 1){
 			game.document.getElementById("awardTeam1").click();
 		}
@@ -120,7 +124,8 @@ var successfulAnswers = 0;
 			game.document.getElementById("awardTeam2").click();
 		}
 		
-	play_sound('ff_dogru.mp3');
+		play_sound('ff_dogru.mp3');
+		pointsAwarded = true;
 	}
 	
 	function GetQuestion(questionParam){
