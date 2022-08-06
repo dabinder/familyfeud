@@ -5,6 +5,7 @@ var game = null;
 var whichTeamTurn = -1;
 var missPointTeam1 = 0;
 var missPointTeam2 = 0;
+var steal = false;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
@@ -89,8 +90,11 @@ var successfulAnswers = 0;
 		}
 		setTimeout(() => {
 			game.document.getElementById("misses").className = "";
-			if (counter == maxMiss) {
+			if (steal) {
+				calculatePoints(whichTeamTurn == 1 ? 2 : 1);
+			} else if (counter == maxMiss) {
 				changeTurn();
+				steal = true;
 			}
 		}, 1000);
 		play_sound('ff-strike.wav');
@@ -104,6 +108,8 @@ var successfulAnswers = 0;
 		}
 		deleteMissPoint();
 		game.app.changeQuestion();
+		steal = false;
+		successfulAnswers = 0;
 	}
 	
 	function calculatePoints(team){
@@ -135,7 +141,6 @@ var successfulAnswers = 0;
 			
 			row.setAttribute("id", tempID, 0);
 			row.addEventListener("click", function () {
-			// row.onclick = function() {
 				if (whichTeamTurn === -1) return;
 				game.document.getElementById(this.id).click();
 				var tempBgColor = this.style.backgroundColor;
@@ -143,7 +148,7 @@ var successfulAnswers = 0;
 					this.setAttribute("style", "background-color: lightgreen;");
 					play_sound('ff-clang.wav');
 					successfulAnswers++;
-					if (successfulAnswers == totalAnswers) {
+					if (successfulAnswers == totalAnswers || steal) {
 						calculatePoints(whichTeamTurn);
 					}
 				}

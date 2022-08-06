@@ -3,8 +3,6 @@ const shuffleQuestions = false;
 var team1 = window.opener.document.getElementById("team1NAME").value;
 var team2 = window.opener.document.getElementById("team2NAME").value;
 
-var steal = false;
-
 var app = {
 	version: 1,
 	currentQ: 0,
