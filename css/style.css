@@ -245,8 +245,7 @@ body {
 .gameBoard .btnHolder .miss{
 	background-color: red;
 
-  visibility: hidden;
-  display:inline-block;
+  display: none;
   font-size: 20px;
   height:50px;
   line-height:50px;
@@ -255,8 +254,11 @@ body {
   -webkit-box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
   -moz-box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
   box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
-
 }
+.gameBoard .btnHolder .miss.active {
+  display:inline-block;
+}
+
 
 .gameBoard .btnHolder .button{
   cursor: pointer;

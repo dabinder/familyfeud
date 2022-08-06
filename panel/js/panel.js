@@ -67,9 +67,9 @@ var successfulAnswers = 0;
 		missPointTeam2 = 0;
 		document.getElementById("misspoint1").innerHTML = missPointTeam1;
 		document.getElementById("misspoint2").innerHTML = missPointTeam2;
-		game.document.getElementById("missDisplay_1").style.visibility = "hidden";
-		game.document.getElementById("missDisplay_2").style.visibility = "hidden";
-		game.document.getElementById("missDisplay_3").style.visibility = "hidden";
+		game.document.getElementById("missDisplay_1").classList.remove("active");
+		game.document.getElementById("missDisplay_2").classList.remove("active");
+		game.document.getElementById("missDisplay_3").classList.remove("active");
 	}
 	
 	function showMissPoint(team){
@@ -85,7 +85,7 @@ var successfulAnswers = 0;
 		var counter = team === 1 ? missPointTeam1 : missPointTeam2;
 		game.document.getElementById("misses").className = "active";
 		for (i = 1; i <= counter; i++) { 
-			game.document.getElementById(`missDisplay_${i}`).style.visibility = "visible";
+			game.document.getElementById(`missDisplay_${i}`).classList.add("active");
 		}
 		setTimeout(() => {
 			game.document.getElementById("misses").className = "";
@@ -218,26 +218,15 @@ var successfulAnswers = 0;
 	}
 	
 	function gameCompleted(){
-		var x = game.document.getElementById('firework');
 		document.getElementById("buttonWinner").disabled = false;
-		if (x.style.visibility === 'hidden') {
-			x.style.visibility = 'visible';
 			game.document.getElementById("gameBoardId").style.display = "none";
 			// game.document.getElementById("idcLogo").style.width = '50%';
-		} else {
-			x.style.visibility = 'hidden';
-		}
-		
 		
 		var table = document.getElementById("tableAnswers");
 		for(var i = table.rows.length - 1; i > 0; i--){
 			table.deleteRow(i);
 		}
 		announceWinner();
-	}
-	
-	function hideFirework(){		
-		game.document.getElementById('firework').style.visibility = 'hidden';
 	}
 	
 	function announceWinner(){
