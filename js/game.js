@@ -251,19 +251,19 @@ function teamNameChange() {
 	document.getElementById("awardTeam2").innerHTML = team2;
 }
 
-function winner() {
-	var winner;
-	var team1Score = parseInt(document.getElementById("team1").textContent);
-	var team2Score = parseInt(document.getElementById("team2").textContent);
+function winner(tieBreaker) {
+	let winner;
+	let team1Score = parseInt(document.getElementById("team1").textContent);
+	let team2Score = parseInt(document.getElementById("team2").textContent);
 
 	if (team1Score > team2Score) {
-		winner = team1 + " wins!";
+		winner = team1;
 	} else if (team1Score < team2Score) {
-		winner = team2 + " wins!";
+		winner = team2;
 	} else {
-		winner = "Both teams won this tie!";
+		winner = tieBreaker === 1 ? team1 : team2;
 	}
-	return winner;
+	return `${winner} wins!`;
 }
 
 //oyun kapatıldı.

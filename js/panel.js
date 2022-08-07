@@ -3,11 +3,13 @@ const maxMiss = 3;
 
 var game = null;
 var currentTeam = -1;
+var faceOffWinner = -1;
+var startingTeam = -1;
 var missPointTeam1 = 0;
 var missPointTeam2 = 0;
 var steal = false;
 var pointsAwarded = false;
-var faceOff = true;
+var faceOff = false;
 var faceOffMiss = false;
 var faceOffAnswered = false;
 var lastQuestion = false;
@@ -16,9 +18,9 @@ var currentRound = -1;
 var totalAnswers = 0;
 var successfulAnswers = 0;
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 	var roundSelect = document.getElementById("roundSelect");
-	roundSelect.addEventListener("change", function(evt) {
+	roundSelect.addEventListener("change", function (evt) {
 		currentRound = parseInt(this.value);
 	}, false);
 	roundSelect.dispatchEvent(new Event("change"));
@@ -34,6 +36,8 @@ function start_game() {
 	faceOff = true;
 	faceOffMiss = false;
 	faceOffAnswered = false;
+	faceOffWinner = -1;
+	startingTeam = -1;
 	lastQuestion = false;
 }
 
@@ -134,7 +138,10 @@ function nextQuestion() {
 	steal = false;
 	successfulAnswers = 0;
 	pointsAwarded = false;
-	faceOff = false;
+	if (faceOff) {
+		turnOfTeam(startingTeam);
+		faceOff = false;
+	}
 	if (currentTeam < 1) {
 		document.getElementById("tableAnswers").classList.remove("ready");
 	} else {
@@ -190,9 +197,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 			game.app.showCard(rank, function () {
 				if (faceOff) {
 					if (parseInt(rank) === 0 || faceOffMiss) {
-						// play_sound('ff_dogru.mp3');
-						document.getElementById("buttonNextQuestion").disabled = false;
-						document.getElementById("buttonMiss").disabled = true;
+						completeFaceOff();
 					} else {
 						faceOffAnswered = true;
 					}
@@ -210,6 +215,23 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 
 		document.getElementById("currentQ").innerHTML = currentQnumber;
 	}
+}
+
+function setFaceOffWinner(team) {
+	faceOffWinner = team;
+	document.getElementById("faceoffWinner").textContent = team;
+	document.getElementById("team1FaceOff").disabled = true;
+	document.getElementById("team2FaceOff").disabled = true;
+	document.getElementById("team1Start").disabled = false;
+	document.getElementById("team2Start").disabled = false;
+}
+
+function setStartingTeam(team) {
+	startingTeam = team;
+	document.getElementById("team1Start").disabled = true;
+	document.getElementById("team2Start").disabled = true;
+	document.getElementById("buttonNextQuestion").disabled = false;
+	document.getElementById("currentTeam").textContent = team;
 }
 
 function turnOfTeam(team) {
@@ -242,8 +264,8 @@ function gameClosed() {
 	document.getElementById("question").className = "label label-danger";
 	missPointTeam1 = 0;
 	document.getElementById("misspoint1").innerHTML = missPointTeam1;
-	missPointTeam1 = 0;
-	document.getElementById("misspoint2").innerHTML = missPointTeam1;
+	missPointTeam2 = 0;
+	document.getElementById("misspoint2").innerHTML = missPointTeam2;
 
 	document.getElementById("buttonClose").disabled = true;
 	document.getElementById("buttonMiss").disabled = true;
@@ -262,7 +284,7 @@ function gameClosed() {
 function gameCompleted() {
 	document.getElementById("buttonFinish").disabled = true;
 
-	game.document.getElementById("winnerId").innerHTML = game.winner();
+	game.document.getElementById("winnerId").innerHTML = game.winner(faceOffWinner);
 	game.document.getElementById("winnercontainer").classList.add("active");
 }
 
@@ -293,9 +315,7 @@ function miss() {
 		setTimeout(() => {
 			game.document.getElementById("misses").classList.remove("active");
 			if (faceOffAnswered) {
-				// play_sound('ff_dogru.mp3');
-				document.getElementById("buttonNextQuestion").disabled = false;
-				document.getElementById("buttonMiss").disabled = true;
+				completeFaceOff();
 			}
 		}, 1000);
 	} else {
@@ -325,4 +345,11 @@ function miss() {
 		}, 1000);
 		play_sound('ff-strike.wav');
 	}
+}
+
+function completeFaceOff() {
+	// play_sound('ff_dogru.mp3');
+	document.getElementById("buttonMiss").disabled = true;
+	document.getElementById("team1FaceOff").disabled = false;
+	document.getElementById("team2FaceOff").disabled = false;
 }
