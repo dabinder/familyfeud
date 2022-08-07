@@ -209,16 +209,6 @@ var app = {
 			},
 			ease: Power3.easeOut,
 		});
-
-		TweenMax.to(currentScore, 1, {
-			var: 0,
-			onUpdate: function () {
-				boardScore.html(Math.round(currentScore.var));
-			},
-			ease: Power3.easeOut,
-		});
-
-
 	},
 
 	changeQuestion: function (callback) {

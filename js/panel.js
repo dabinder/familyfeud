@@ -32,6 +32,10 @@ function start_game() {
 	nextQuestion();
 	document.getElementById("buttonMiss").disabled = false;
 	document.getElementById("tableAnswers").classList.add("ready");
+	document.getElementById("team1FaceOff").disabled = true;
+	document.getElementById("team2FaceOff").disabled = true;
+	document.getElementById("team1Start").disabled = true;
+	document.getElementById("team2Start").disabled = true;
 	currentTeam = -1;
 	faceOff = true;
 	faceOffMiss = false;
@@ -160,7 +164,6 @@ function calculatePoints(team) {
 
 	// play_sound('ff_dogru.mp3');
 	pointsAwarded = true;
-	document.getElementById("buttonNextQuestion").disabled = lastQuestion;
 	document.getElementById("buttonMiss").disabled = true;
 }
 
@@ -183,7 +186,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		row.setAttribute("id", tempID, 0);
 		row.dataset.answer = i;
 		row.addEventListener("click", function () {
-			if (!faceOff && (currentTeam === -1 || pointsAwarded)) return;
+			if (!faceOff && currentTeam === -1) return;
 			var flipped = this.dataset.flipped == "true";
 			if (!flipped) {
 				this.dataset.flipped = true;
@@ -201,8 +204,10 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 					} else {
 						faceOffAnswered = true;
 					}
-				} else if (successfulAnswers == totalAnswers || steal) {
+				} else if (!pointsAwarded && (successfulAnswers == totalAnswers || steal)) {
 					calculatePoints(currentTeam);
+				} else if (pointsAwarded && successfulAnswers == totalAnswers) {
+					document.getElementById("buttonNextQuestion").disabled = lastQuestion;
 				}
 			});
 		}, false);
@@ -274,6 +279,10 @@ function gameClosed() {
 	document.getElementById("buttonOpen").disabled = false;
 	document.getElementById("tableAnswers").style.display = "none";
 	document.getElementById("answerInfo").style.display = "";
+	document.getElementById("team1FaceOff").disabled = true;
+	document.getElementById("team2FaceOff").disabled = true;
+	document.getElementById("team1Start").disabled = true;
+	document.getElementById("team2Start").disabled = true;
 
 	var table = document.getElementById("tableAnswers");
 	for (var i = table.rows.length - 1; i > 0; i--) {
