@@ -11,6 +11,10 @@ body {
   overflow: hidden;
 }
 
+#logo {
+  height: 250px;
+}
+
 div#winnercontainer {
 	text-align: center;
   z-index: 999;
