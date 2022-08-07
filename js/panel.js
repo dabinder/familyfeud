@@ -8,6 +8,7 @@ var missPointTeam2 = 0;
 var steal = false;
 var pointsAwarded = false;
 var faceOff = true;
+var faceOffMiss = false;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
@@ -16,7 +17,9 @@ function start_game() {
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonAwardT2").disabled = false;
 	nextQuestion();
+	document.getElementById("buttonFaceOffMiss").disabled = false;
 	faceOff = true;
+	faceOffMiss = false;
 }
 
 function open_game_window() {
@@ -99,6 +102,7 @@ function nextQuestion() {
 	for (var i = table.rows.length - 1; i > 0; i--) {
 		table.deleteRow(i);
 	}
+	document.getElementById("buttonFaceOffMiss").disabled = true;
 	deleteMissPoint();
 	game.app.changeQuestion(() => document.getElementById("buttonAwardT2").disabled = true);
 	if (!steal) {
@@ -154,7 +158,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 			}
 			let rank = this.dataset.answer;
 			game.app.showCard(rank, function() {
-				if (faceOff && parseInt(rank) === 0) {
+				if (faceOff && (parseInt(rank) === 0 || faceOffMiss)) {
 					play_sound('ff_dogru.mp3');
 				} else if (successfulAnswers == totalAnswers || steal) {
 					calculatePoints(whichTeamTurn);
@@ -248,4 +252,12 @@ function changeTurn() {
 	} else if (whichTeamTurn == 2) {
 		turnOfTeam(1);
 	}
+}
+
+function faceOffWrongAnswer() {
+	game.document.getElementById("misses").className = "active";
+	game.document.getElementById("missDisplay_1").classList.add("active");
+	play_sound('ff-strike.wav');
+	faceOffMiss = true;
+	setTimeout(() => game.document.getElementById("misses").className = "", 1000);
 }
