@@ -193,8 +193,8 @@ var app = {
 			var: teamScoreUpdated,
 			onUpdate: function () {
 				team.html(Math.round(teamScore.var));
-				window.opener.document.getElementById("team1POINT").value = document.getElementById("team1").innerHTML;
-				window.opener.document.getElementById("team2POINT").value = document.getElementById("team2").innerHTML;
+				window.opener.document.getElementById("team1POINT").innerHTML = document.getElementById("team1").innerHTML;
+				window.opener.document.getElementById("team2POINT").innerHTML = document.getElementById("team2").innerHTML;
 			},
 			ease: Power3.easeOut,
 		});
@@ -224,8 +224,8 @@ var app = {
 }
 
 function teamPointChange() {
-	document.getElementById("team1").innerHTML = window.opener.document.getElementById("team1POINT").value;
-	document.getElementById("team2").innerHTML = window.opener.document.getElementById("team2POINT").value;
+	document.getElementById("team1").innerHTML = window.opener.document.getElementById("team1POINT").innerHTML;
+	document.getElementById("team2").innerHTML = window.opener.document.getElementById("team2POINT").innerHTML;
 }
 
 function teamNameChange() {
