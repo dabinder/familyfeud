@@ -80,7 +80,6 @@ function play_sound(sound) {
 function pause_sound() {
 	audio.pause();
 	audio = new Audio('');
-	//audio.play();
 }
 
 function deleteMissPoint() {
