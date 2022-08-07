@@ -7,6 +7,7 @@ var missPointTeam1 = 0;
 var missPointTeam2 = 0;
 var steal = false;
 var pointsAwarded = false;
+var tossUp = true;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
@@ -15,7 +16,7 @@ function start_game() {
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonAwardT2").disabled = false;
 	nextQuestion();
-	turnOfTeam(1);
+	tossUp = true;
 }
 
 function open_game_window() {
@@ -102,6 +103,7 @@ function nextQuestion() {
 	steal = false;
 	successfulAnswers = 0;
 	pointsAwarded = false;
+	tossUp = false;
 }
 
 function calculatePoints(team) {
@@ -136,7 +138,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		row.setAttribute("id", tempID, 0);
 		row.dataset.answer = i;
 		row.addEventListener("click", function () {
-			if (whichTeamTurn === -1 || pointsAwarded) return;
+			if (!tossUp && (whichTeamTurn === -1 || pointsAwarded)) return;
 			var flipped = this.dataset.flipped == "true";
 			if (!flipped) {
 				this.dataset.flipped = true;
@@ -147,7 +149,10 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 				successfulAnswers--;
 			}
 			game.app.showCard(this.dataset.answer, function() {
-				if (successfulAnswers == totalAnswers || steal) {
+				if (tossUp) {
+					play_sound('ff_dogru.mp3');
+				}
+				else if (successfulAnswers == totalAnswers || steal) {
 					calculatePoints(whichTeamTurn);
 				}
 			});
@@ -193,7 +198,6 @@ function turnOfTeam(team) {
 }
 
 function gameClosed() {
-	//sıfırlayacaksın abi herşeyi!!!
 	game = null;
 	document.getElementById("question").innerHTML = "The game has been finished.";
 	document.getElementById("question").className = "label label-danger";
@@ -201,7 +205,7 @@ function gameClosed() {
 	document.getElementById("misspoint1").innerHTML = missPointTeam1;
 	missPointTeam1 = 0;
 	document.getElementById("misspoint2").innerHTML = missPointTeam1;
-
+	
 	document.getElementById("buttonClose").disabled = true;
 	document.getElementById("buttonMistakeT1").disabled = true;
 	document.getElementById("buttonMistakeT2").disabled = true;
