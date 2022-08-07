@@ -85,7 +85,6 @@ div#winnercontainer > .winner {
   font-family: helvetica, sans-serif;
   color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);
-  border: 5px solid #000000;
   text-align: center;
   padding: 150px;
   border-radius: 1%;
@@ -94,15 +93,10 @@ div#winnercontainer > .winner {
   min-width: 305px;
   margin: auto;
 
-  background: url('../agulogo-trans.png') #7d2a2a;
-  background-size: 33px 35px;
-  /*background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/40041/bgFF.svg') #84151b;*/
-  /*background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/40041/bgFF.svg') #3a84c3;*/
+  background: url('../images/background.png') #7d2a2a;
+  background-size: 40px auto;
   background-repeat: repeat;
-  background-position: center center;
-  -webkit-box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
-  -moz-box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
-  box-shadow: 0 1px 24px 1px rgba(0, 0, 0, 0.48);
+  background-position: left top;
 }
 
 .gameBoard .score {
