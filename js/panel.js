@@ -145,19 +145,20 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		row.dataset.answer = i;
 		row.addEventListener("click", function () {
 			if (whichTeamTurn === -1) return;
-			game.app.showCard(this.dataset.answer);
 			var flipped = this.dataset.flipped == "true";
 			if (!flipped) {
 				this.dataset.flipped = true;
 				play_sound('ff-clang.wav');
 				successfulAnswers++;
-				if (successfulAnswers == totalAnswers || steal) {
-					calculatePoints(whichTeamTurn);
-				}
 			} else {
 				this.dataset.flipped = false;
 				successfulAnswers--;
 			}
+			game.app.showCard(this.dataset.answer, function() {
+				if (successfulAnswers == totalAnswers || steal) {
+					calculatePoints(whichTeamTurn);
+				}
+			});
 		}, false);
 		cell1.innerHTML = i + 1;
 		cell2.innerHTML = answers[i][0];

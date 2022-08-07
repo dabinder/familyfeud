@@ -128,7 +128,7 @@ var app = {
 		window.opener.GetAnswers(qAnswr, app.currentQ, app.questions.length);
 	},
 	
-	showCard: function (cardNum) {
+	showCard: function (cardNum, callback) {
 		var card = $(`#answer_${cardNum} > div.card`);
 		var flipped = $(card).data("flipped")
 		var cardRotate = (flipped) ? 0 : -180;
@@ -139,10 +139,10 @@ var app = {
 		flipped = !flipped;
 		$(card).data("flipped", flipped);
 		
-		app.getBoardScore()
+		app.getBoardScore(callback)
 	},
 	
-	getBoardScore: function () {
+	getBoardScore: function (callback) {
 
 		//var gotPointsBefore = document.getElementById(card).getAttribute("data-card-got");
 
@@ -164,6 +164,9 @@ var app = {
 			var: score,
 			onUpdate: function () {
 				boardScore.html(Math.round(currentScore.var));
+			},
+			onComplete: function () {
+				if (typeof(callback) == "function") callback();
 			},
 			ease: Power3.easeOut,
 		});
