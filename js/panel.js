@@ -7,7 +7,7 @@ var missPointTeam1 = 0;
 var missPointTeam2 = 0;
 var steal = false;
 var pointsAwarded = false;
-var tossUp = true;
+var faceOff = true;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
@@ -16,7 +16,7 @@ function start_game() {
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonAwardT2").disabled = false;
 	nextQuestion();
-	tossUp = true;
+	faceOff = true;
 }
 
 function open_game_window() {
@@ -100,11 +100,14 @@ function nextQuestion() {
 		table.deleteRow(i);
 	}
 	deleteMissPoint();
-	game.app.changeQuestion();
+	game.app.changeQuestion(() => document.getElementById("buttonAwardT2").disabled = true);
+	if (!steal) {
+		changeTurn();
+	}
 	steal = false;
 	successfulAnswers = 0;
 	pointsAwarded = false;
-	tossUp = false;
+	faceOff = false;
 }
 
 function calculatePoints(team) {
@@ -139,7 +142,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		row.setAttribute("id", tempID, 0);
 		row.dataset.answer = i;
 		row.addEventListener("click", function () {
-			if (!tossUp && (whichTeamTurn === -1 || pointsAwarded)) return;
+			if (!faceOff && (whichTeamTurn === -1 || pointsAwarded)) return;
 			var flipped = this.dataset.flipped == "true";
 			if (!flipped) {
 				this.dataset.flipped = true;
@@ -149,11 +152,11 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 				this.dataset.flipped = false;
 				successfulAnswers--;
 			}
-			game.app.showCard(this.dataset.answer, function() {
-				if (tossUp) {
+			let rank = this.dataset.answer;
+			game.app.showCard(rank, function() {
+				if (faceOff && parseInt(rank) === 0) {
 					play_sound('ff_dogru.mp3');
-				}
-				else if (successfulAnswers == totalAnswers || steal) {
+				} else if (successfulAnswers == totalAnswers || steal) {
 					calculatePoints(whichTeamTurn);
 				}
 			});

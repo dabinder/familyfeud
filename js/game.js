@@ -222,8 +222,11 @@ var app = {
 
 	},
 
-	changeQuestion: function () {
-		app.makeQuestion(app.currentQ++)
+	changeQuestion: function (callback) {
+		app.makeQuestion(app.currentQ++);
+		if (app.currentQ == app.questions.length) {
+			callback();
+		}
 	},
 
 	// Inital function
