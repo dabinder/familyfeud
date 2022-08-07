@@ -1,4 +1,5 @@
 const shuffleQuestions = false;
+const minAnswers = 8;
 
 var team1 = window.opener.document.getElementById("team1NAME").value;
 var team2 = window.opener.document.getElementById("team2NAME").value;
@@ -64,23 +65,34 @@ var app = {
 	},
 
 	// Action functions
-	makeQuestion: function (qNum) {
-		var qText = app.questions[qNum]
+	makeQuestion: function (qIndex) {
+		var col1 = app.board.find(".col1");
+		var col2 = app.board.find(".col2");
+		col1.empty();
+		col2.empty();
+
+		if (qIndex == -1) { //draw empty board
+			for (var i = 0; i < minAnswers; i++) {
+				let aLI = $("<div class='cardHolder empty'><div></div></div>");
+				let parentDiv = (i < (minAnswers / 2)) ? col1 : col2;
+				$(aLI).appendTo(parentDiv)
+			}
+
+			return;
+		}
+
+		var qText = app.questions[qIndex]
 		var qAnswr = app.allData[qText]
 
 		var qNum = qAnswr.length
-		qNum = (qNum < 8) ? 8 : qNum;
+		qNum = (qNum < minAnswers) ? minAnswers : qNum;
 		qNum = (qNum % 2 != 0) ? qNum + 1 : qNum;
 
 		var boardScore = app.board.find("#boardScore")
 		var question = app.board.find(".question")
-		var col1 = app.board.find(".col1")
-		var col2 = app.board.find(".col2")
 
 		boardScore.html(0)
 		question.html(qText.replace(/&x22;/gi, '"'))
-		col1.empty()
-		col2.empty()
 
 		for (var i = 0; i < qNum; i++) {
 			var aLI

@@ -36,6 +36,7 @@ function close_game_window() {
 
 function game_window_init_done() {
 	document.getElementById("question").className = "label label-success";
+	game.app.makeQuestion(-1);
 }
 
 function game_window_closed() {
