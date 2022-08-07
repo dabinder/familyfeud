@@ -13,6 +13,7 @@ var successfulAnswers = 0;
 
 function start_game() {
 	document.getElementById("buttonStart").disabled = true;
+	document.getElementById("buttonAwardT2").disabled = false;
 	nextQuestion();
 	turnOfTeam(1);
 }
@@ -40,9 +41,6 @@ function close_game_window() {
 
 function game_window_init_done() {
 	document.getElementById("question").className = "label label-success";
-	// document.getElementById("buttonAwardT1").disabled = false;
-	document.getElementById("buttonAwardT2").disabled = false;
-	// document.getElementById("buttonAwardT3").disabled = false;
 }
 
 function game_window_closed() {
@@ -179,6 +177,9 @@ function turnOfTeam(team) {
 		game.document.getElementById("awardTeam1").classList.add("active");
 		game.document.getElementById("team2").classList.remove("active");
 		game.document.getElementById("awardTeam2").classList.remove("active");
+		
+		document.getElementById("team1Label").classList.add("active");
+		document.getElementById("team2Label").classList.remove("active");
 
 		document.getElementById("buttonMistakeT1").disabled = false;
 
@@ -188,6 +189,9 @@ function turnOfTeam(team) {
 		game.document.getElementById("awardTeam2").classList.add("active");
 		game.document.getElementById("team1").classList.remove("active");
 		game.document.getElementById("awardTeam1").classList.remove("active");
+
+		document.getElementById("team1Label").classList.remove("active");
+		document.getElementById("team2Label").classList.add("active");
 
 		document.getElementById("buttonMistakeT2").disabled = false;
 
@@ -209,9 +213,7 @@ function gameClosed() {
 	document.getElementById("buttonClose").disabled = true;
 	document.getElementById("buttonMistakeT1").disabled = true;
 	document.getElementById("buttonMistakeT2").disabled = true;
-	// document.getElementById("buttonAwardT1").disabled = true;
 	document.getElementById("buttonAwardT2").disabled = true;
-	// document.getElementById("buttonAwardT3").disabled = true;
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonOpen").disabled = false;
 	document.getElementById("tableAnswers").style.display = "none";

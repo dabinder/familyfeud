@@ -1,3 +1,7 @@
 #tableAnswers tr[data-flipped="true"] {
 	background-color: lightgreen;
 }
+
+.team-label.active {
+	background-color: skyblue;
+}

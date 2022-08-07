@@ -2,14 +2,13 @@
 html {
   height: 100%;
   width: 100%;
-  
 }
 
 body {
   background: linear-gradient(to bottom, #a7cfdf 0%, #23538a 100%);
   background-attachment:fixed;
   height:100%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .idc{
@@ -179,7 +178,7 @@ body {
   border: 4px solid white;
 }
 .gameBoard .cardHolder:not(.empty){
-  cursor: pointer;
+  cursor: default;
 }
 .gameBoard .cardHolder b {
   position: absolute;
@@ -261,7 +260,7 @@ body {
 
 
 .gameBoard .btnHolder .button{
-  cursor: pointer;
+  cursor: default;
   display:inline-block;
   font-size: 20px;
   margin:10px;
