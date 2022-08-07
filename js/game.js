@@ -85,7 +85,7 @@ var app = {
 		for (var i = 0; i < qNum; i++) {
 			var aLI
 			if (qAnswr[i]) {
-				aLI = $("<div class='cardHolder' data-card-got='false' id='answer_" + i + "'>" +
+				aLI = $("<div class='cardHolder' data-card-got='false' id='answer_" + i + "' data-answer='" + i + "'>" +
 					"<div class='card'>" +
 					"<div class='front'>" +
 					"<span class='DBG'>" + (i + 1) + "</span>" +
@@ -124,25 +124,25 @@ var app = {
 		cards.data("flipped", false)
 		cards.data("gotPoint", false)
 
-		function showCard() {
-			var card = $('.card', this)
-			var flipped = $(card).data("flipped")
-			var cardRotate = (flipped) ? 0 : -180;
-			TweenLite.to(card, 1, {
-				rotationX: cardRotate,
-				ease: Back.easeOut
-			})
-			flipped = !flipped
-			$(card).data("flipped", flipped)
-
-			app.getBoardScore(this.id)
-		}
 		window.opener.GetQuestion(qText);
 		window.opener.GetAnswers(qAnswr, app.currentQ, app.questions.length);
-		cardHolders.on('click', showCard)
 	},
 	
-	getBoardScore: function (card) {
+	showCard: function (cardNum) {
+		var card = $(`#answer_${cardNum} > div.card`);
+		var flipped = $(card).data("flipped")
+		var cardRotate = (flipped) ? 0 : -180;
+		TweenLite.to(card, 1, {
+			rotationX: cardRotate,
+			ease: Back.easeOut
+		});
+		flipped = !flipped;
+		$(card).data("flipped", flipped);
+		
+		app.getBoardScore()
+	},
+	
+	getBoardScore: function () {
 
 		//var gotPointsBefore = document.getElementById(card).getAttribute("data-card-got");
 

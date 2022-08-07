@@ -145,20 +145,21 @@ var successfulAnswers = 0;
 			var tempID = "answer_" + i;
 			
 			row.setAttribute("id", tempID, 0);
+			row.dataset.answer = i;
 			row.addEventListener("click", function () {
 				if (whichTeamTurn === -1) return;
-				game.document.getElementById(this.id).click();
-				var tempBgColor = this.style.backgroundColor;
-				if(tempBgColor == ""){
-					this.setAttribute("style", "background-color: lightgreen;");
+				game.app.showCard(this.dataset.answer);
+				var flipped = this.dataset.flipped == "true";
+				if(!flipped){
+					this.dataset.flipped = true;
 					play_sound('ff-clang.wav');
 					successfulAnswers++;
 					if (successfulAnswers == totalAnswers || steal) {
 						calculatePoints(whichTeamTurn);
 					}
 				}
-				else if(tempBgColor == "lightgreen"){
-					this.setAttribute("style", "background-color: ;");
+				else {
+					this.dataset.flipped = false;
 					successfulAnswers--;
 				}
 			}, false);
