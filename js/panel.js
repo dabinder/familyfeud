@@ -51,9 +51,25 @@ function open_game_window() {
 	game.addEventListener("DOMContentLoaded", function () {
 		game.app.init(currentRound);
 	}, false);
+	reset();
+}
+
+function reset() {
 	document.getElementById("buttonStart").disabled = false;
 	document.getElementById("buttonOpen").disabled = true;
 	document.getElementById("buttonClose").disabled = false;
+	document.getElementById("team1FaceOff").disabled = true;
+	document.getElementById("team2FaceOff").disabled = true;
+	document.getElementById("team1Start").disabled = true;
+	document.getElementById("team2Start").disabled = true;
+	document.getElementById("team1POINT").textContent = 0;
+	document.getElementById("team2POINT").textContent = 0;
+	document.getElementById("team1Label").classList.remove("active");
+	document.getElementById("team2Label").classList.remove("active");
+	document.getElementById("faceoffWinner").textContent = "";
+	document.getElementById("currentTeam").textContent = "";
+	document.getElementById("misspoint1").textContent = "";
+	document.getElementById("misspoint2").textContent = "";
 }
 
 function close_game_window() {
@@ -206,7 +222,9 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 					}
 				} else if (!pointsAwarded && (successfulAnswers == totalAnswers || steal)) {
 					calculatePoints(currentTeam);
-				} else if (pointsAwarded && successfulAnswers == totalAnswers) {
+				}
+				
+				if (successfulAnswers == totalAnswers) {
 					document.getElementById("buttonNextQuestion").disabled = lastQuestion;
 				}
 			});

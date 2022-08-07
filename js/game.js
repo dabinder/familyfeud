@@ -220,7 +220,7 @@ var app = {
 
 	// Inital function
 	init: function (round) {
-		app.jsonFile = `questions/round${round}.json`,
+		app.jsonFile = `questions/round${round}.json?${Math.random()}`,
 		$.getJSON(app.jsonFile, app.jsonLoaded)
 		app.board.find('#awardTeam1').on('click', app.awardPoints)
 		app.board.find('#awardTeam2').on('click', app.awardPoints)
