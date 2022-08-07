@@ -18,11 +18,11 @@
 		["Snake", 10]
 	],
 	"What's the first thing Gehn does in the morning?": [
-		["Smoke pipe/frog", 26],
-		["Visits shrine to Keta/Watches imager", 21],
-		["Get out of bed/wake up", 16],
-		["Use the sink", 15],
+		["Smokes pipe/frog", 26],
+		["Watches image of Keta", 21],
+		["Gets out of bed/wakes up", 16],
+		["Uses the sink", 15],
 		["Human sacrifice", 11],
-		["Music", 11]
+		["Opera/Plays instrument", 11]
 	]
 }

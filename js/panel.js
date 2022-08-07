@@ -18,6 +18,7 @@ function start_game() {
 	document.getElementById("buttonAwardT2").disabled = false;
 	nextQuestion();
 	document.getElementById("buttonFaceOffMiss").disabled = false;
+	document.getElementById("tableAnswers").classList.add("ready");
 	faceOff = true;
 	faceOffMiss = false;
 }
@@ -112,6 +113,9 @@ function nextQuestion() {
 	successfulAnswers = 0;
 	pointsAwarded = false;
 	faceOff = false;
+	if (whichTeamTurn < 1) {
+		document.getElementById("tableAnswers").classList.remove("ready");
+	}
 }
 
 function calculatePoints(team) {
@@ -203,6 +207,8 @@ function turnOfTeam(team) {
 
 		document.getElementById("buttonMistakeT1").disabled = true;
 	}
+	document.getElementById("tableAnswers").classList.add("ready");
+	document.getElementById("currentTeam").textContent = team;
 }
 
 function gameClosed() {
@@ -259,5 +265,5 @@ function faceOffWrongAnswer() {
 	game.document.getElementById("missDisplay_1").classList.add("active");
 	play_sound('ff-strike.wav');
 	faceOffMiss = true;
-	setTimeout(() => game.document.getElementById("misses").className = "", 1000);
+	setTimeout(() => game.document.getElementById("misses").classList.remove("active"), 1000);
 }

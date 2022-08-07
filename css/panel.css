@@ -2,6 +2,13 @@
 	background-color: lightgreen;
 }
 
+#tableAnswers.ready tr:not(:first-child) {
+	cursor: pointer;
+}
+
 .team-label.active {
 	background-color: skyblue;
+}
+.current-team-indicator {
+	font-size: 14pt;
 }

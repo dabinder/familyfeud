@@ -7,7 +7,7 @@ var team2 = window.opener.document.getElementById("team2NAME").value;
 var app = {
 	version: 1,
 	currentQ: 0,
-	jsonFile: "questions/round1.json",
+	jsonFile: "questions/round2.json",
 	board: $("<div>" +
 		"<!--- Scores --->" +
 		"<div class='score' id='boardScore'>0</div>" +
