@@ -7,7 +7,6 @@ var team2 = window.opener.document.getElementById("team2NAME").value;
 var app = {
 	version: 1,
 	currentQ: 0,
-	jsonFile: "questions/round2.json",
 	board: $("<div>" +
 		"<!--- Scores --->" +
 		"<div class='score' id='boardScore'>0</div>" +
@@ -230,7 +229,8 @@ var app = {
 	},
 
 	// Inital function
-	init: function () {
+	init: function (round) {
+		app.jsonFile = `questions/round${round}.json`,
 		$.getJSON(app.jsonFile, app.jsonLoaded)
 		app.board.find('#awardTeam1').on('click', app.awardPoints)
 		app.board.find('#awardTeam2').on('click', app.awardPoints)
@@ -253,8 +253,8 @@ function teamNameChange() {
 
 function winner() {
 	var winner;
-	var team1Score = document.getElementById("team1").innerHTML;
-	var team2Score = document.getElementById("team2").innerHTML;
+	var team1Score = parseInt(document.getElementById("team1").textContent);
+	var team2Score = parseInt(document.getElementById("team2").textContent);
 
 	if (team1Score > team2Score) {
 		winner = team1 + " wins!";

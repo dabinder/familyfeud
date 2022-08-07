@@ -34,8 +34,16 @@
 		<button id="buttonFinish" type="button" class="btn btn-info" onclick="gameCompleted();">Finish Game</button>
 		<button id="buttonClose" type="button" class="btn btn-danger" onclick="close_game_window();" disabled>Close Game</button>
 
-		<BR />
-		<BR />
+		<BR /><BR />
+		
+		<label for="roundSelect">Current Round: </label>
+		<select id="roundSelect" name="roundSelect">
+			<option value="1">Round 1</option>
+			<option value="2">Round 2</option>
+			<option value="3">Round 3</option>
+		</select>
+		
+		<BR /><BR />
 
 		<button id="buttonTurnT1" type="button" class="btn" onclick="turnOfTeam(1);">Switch to Team 1</button>
 		<button id="buttonTurnT2" type="button" class="btn" onclick="turnOfTeam(2);">Switch to Team 2</button>
