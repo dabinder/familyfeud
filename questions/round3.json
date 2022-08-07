@@ -1,0 +1,25 @@
+{
+	"The DRC handed out socks during the company holiday party. What's printed on the socks?": [
+		["DRC Logo/Kerath's Arch", 61],
+		["Traffic cone", 39]
+	],
+	"What's an absolute must have for your explorer's pack?": [
+		["Relto book/Linking book", 32],
+		["Notebook/Writing Materials", 23],
+		["Flashlight/Headlamp", 18],
+		["Camera", 14],
+		["Food & Drink", 14]
+	],
+	"What is the last thing Atrus does before going on a trip?": [
+		["Checks and/or changes locks", 50],
+		["Contacts The Stranger", 21],
+		["Checks linking books", 21],
+		["Kisses Catherine and/or Yeesha", 8]
+	],
+	"Name a treasure you might find in Kadish's Vault": [
+		["Gold", 38],
+		["Uggs", 24],
+		["Linking books", 19],
+		["Helmet/Crown/Headgear", 19]
+	]
+}
