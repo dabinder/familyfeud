@@ -1,0 +1,27 @@
+﻿{
+	"Name a smell you associate with Myst Island": [
+		["Pine", 56],
+		["Ocean", 44]
+	],
+	"Quote a Memorable Line from Myst 4 Revelation": [
+		["Try moving the slider", 45],
+		["I will not be DEFEATED!", 20],
+		["You'll SCROO UP EVERYTHING!", 15],
+		["HOOUGH!", 10],
+		["Curtains lyrics", 10]
+	],
+	"Name a sound you associate with Riven.": [
+		["Ytram", 35],
+		["Sunner", 19],
+		["Whark", 12],
+		["Maglev", 15],
+		["Beetle", 12],
+		["Chooo?", 8]
+	],
+	"Name a taste you associate with Exile.": [
+		["Berries/Squee Fruit", 50],
+		["Squee/Meat", 19],
+		["Salt/Salt water", 19],
+		["Edanna plantlife", 12]
+	]
+}
