@@ -7,7 +7,7 @@ var app = {
 	version: 1,
 	currentQ: 0,
 	jsonFile: "js/FF3.json",
-	board: $("<div id='gameBoardId' class='gameBoard'>" +
+	board: $("<div>" +
 		"<!--- Scores --->" +
 		"<div class='score' id='boardScore'>0</div>" +
 		"<div class='score' id='team1' >0</div>" +
@@ -51,7 +51,7 @@ var app = {
 		}
 		return array;
 	},
-	
+
 	jsonLoaded: function (data) {
 		//console.clear()
 		app.allData = data
@@ -60,9 +60,9 @@ var app = {
 		if (shuffleQuestions == true) {
 			app.shuffle(app.questions);
 		}
-		$('body').append(app.board)
+		$('#gameBoardId').append(app.board)
 	},
-	
+
 	// Action functions
 	makeQuestion: function (qNum) {
 		var qText = app.questions[qNum]
@@ -127,7 +127,7 @@ var app = {
 		window.opener.GetQuestion(qText);
 		window.opener.GetAnswers(qAnswr, app.currentQ, app.questions.length);
 	},
-	
+
 	showCard: function (cardNum, callback) {
 		var card = $(`#answer_${cardNum} > div.card`);
 		var flipped = $(card).data("flipped")
@@ -138,10 +138,10 @@ var app = {
 		});
 		flipped = !flipped;
 		$(card).data("flipped", flipped);
-		
+
 		app.getBoardScore(callback)
 	},
-	
+
 	getBoardScore: function (callback) {
 
 		//var gotPointsBefore = document.getElementById(card).getAttribute("data-card-got");
@@ -166,7 +166,7 @@ var app = {
 				boardScore.html(Math.round(currentScore.var));
 			},
 			onComplete: function () {
-				if (typeof(callback) == "function") callback();
+				if (typeof (callback) == "function") callback();
 			},
 			ease: Power3.easeOut,
 		});
@@ -209,11 +209,11 @@ var app = {
 
 
 	},
-	
+
 	changeQuestion: function () {
 		app.makeQuestion(app.currentQ++)
 	},
-	
+
 	// Inital function
 	init: function () {
 		$.getJSON(app.jsonFile, app.jsonLoaded)
@@ -242,9 +242,9 @@ function winner() {
 	var team2Score = document.getElementById("team2").innerHTML;
 
 	if (team1Score > team2Score) {
-		winner = "Winner " + team1;
+		winner = team1 + " wins!";
 	} else if (team1Score < team2Score) {
-		winner = "Winner " + team2;
+		winner = team2 + " wins!";
 	} else {
 		winner = "Both teams won this tie!";
 	}

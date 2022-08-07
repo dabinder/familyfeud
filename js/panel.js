@@ -18,12 +18,6 @@ function start_game() {
 	turnOfTeam(1);
 }
 
-function finish_game() {
-	// game.document.getElementById("idcLogo").style.width = '50%';
-	game.document.getElementById("welcomePageInfo").innerHTML = "Thank you!";
-	game.document.getElementById("welcomePageInfo").style.display = "";
-}
-
 function open_game_window() {
 	play_sound('ff_dogru.mp3');
 	game = window.open('game.html', 'game', 'resizable=yes');
@@ -142,7 +136,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		row.setAttribute("id", tempID, 0);
 		row.dataset.answer = i;
 		row.addEventListener("click", function () {
-			if (whichTeamTurn === -1) return;
+			if (whichTeamTurn === -1 || pointsAwarded) return;
 			var flipped = this.dataset.flipped == "true";
 			if (!flipped) {
 				this.dataset.flipped = true;
@@ -196,7 +190,6 @@ function turnOfTeam(team) {
 		document.getElementById("buttonMistakeT2").disabled = false;
 
 		document.getElementById("buttonMistakeT1").disabled = true;
-
 	}
 }
 
@@ -226,20 +219,11 @@ function gameClosed() {
 }
 
 function gameCompleted() {
-	document.getElementById("buttonWinner").disabled = false;
-	game.document.getElementById("gameBoardId").style.display = "none";
+	document.getElementById("buttonFinish").disabled = true;
 	// game.document.getElementById("idcLogo").style.width = '50%';
 
-	var table = document.getElementById("tableAnswers");
-	for (var i = table.rows.length - 1; i > 0; i--) {
-		table.deleteRow(i);
-	}
-	announceWinner();
-}
-
-function announceWinner() {
 	game.document.getElementById("winnerId").innerHTML = game.winner();
-	game.document.getElementById('winnerId').style.display = "block";
+	game.document.getElementById("winnercontainer").classList.add("active");
 }
 
 function changeTeamNames() {

@@ -11,22 +11,24 @@ body {
   overflow: hidden;
 }
 
-.idc{
-	/* margin-top: 100px; */
-	text-align: center;	
+div#winnercontainer {
+	text-align: center;
+  z-index: 999;
+  background-color: skyblue;
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
 }
-
-.idc .winner{
-	-webkit-animation: flash linear 1s infinite;
-	animation: flash linear 1s infinite;
+div#winnercontainer.active {
+  display: block;
 }
-
-.idc .winner {
-	display: none;
+div#winnercontainer > .winner {
 	font-size: 65px;
 	color: #C81717;
 	text-shadow: 0 0 15px #fff, 0 0 20px #fff, 0 0 25px #fff, 0 0 30px #7d2a2a, 0 0 35px #7d2a2a, 0 0 50px #7d2a2a, 0 0 60px #7d2a2a, 0 0 100px #7d2a2a;
 }
+
 @-webkit-keyframes flash {
 	0% { opacity: 1; } 
 	50% { opacity: .1; } 
@@ -76,7 +78,10 @@ body {
 }
 
 .gameBoard {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
   font-family: helvetica, sans-serif;
   color: white;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 1);

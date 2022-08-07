@@ -8,28 +8,16 @@
 	<link rel="stylesheet" href="css/normalize.min.css">
 	<link rel="stylesheet" href="css/game.css">
 	<link href="https://fonts.googleapis.com/css?family=Zeyada" rel="stylesheet">
-	<style>
-		h1#welcomePageInfo {
-			font-size: 12em;
-			margin-top: 0.67em;
-			margin-bottom: 0.67em;
-			margin-left: 0;
-			margin-right: 0;
-			font-weight: bold;
-			font-family: 'Zeyada', cursive;
-			color: #ddedff;
-		}
-	</style>
 </head>
 
 <body>
 	<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js'></script>
-
-	<div class="idc">
-		<!--<img id="idcLogo" src="pioneerbg.png" width="75%">-->
-		<h1 id="welcomePageInfo"></h1>
-		<h1 id="winnerId" class="winner"></h1>
+	
+	<div id='gameBoardId' class='gameBoard'>
+		<div id="winnercontainer">
+			<h1 id="winnerId" class="winner"></h1>
+		</div>
 	</div>
 
 	<script src='js/jquery-2.2.4.min.js'></script>
