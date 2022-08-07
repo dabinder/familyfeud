@@ -159,7 +159,6 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 		document.getElementById("tableAnswers").style.display = "";
 		document.getElementById("answerInfo").style.display = "none";
 
-		// document.getElementById("totalQ").innerHTML = totalQnumber;
 		document.getElementById("currentQ").innerHTML = currentQnumber;
 	}
 }
@@ -220,7 +219,6 @@ function gameClosed() {
 
 function gameCompleted() {
 	document.getElementById("buttonFinish").disabled = true;
-	// game.document.getElementById("idcLogo").style.width = '50%';
 
 	game.document.getElementById("winnerId").innerHTML = game.winner();
 	game.document.getElementById("winnercontainer").classList.add("active");
