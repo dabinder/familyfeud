@@ -38,43 +38,33 @@
 		<BR />
 
 		<button id="buttonTurnT1" type="button" class="btn" onclick="turnOfTeam(1);">Switch to Team 1</button>
-		<button id="buttonMistakeT1" type="button" class="btn" onclick="showMissPoint(1);" disabled>Team 1 Mistake
-			<span id="misspoint1" class="label label-danger">0</span>
-		</button>
-		<button id="buttonMistakeT2" type="button" class="btn" onclick="showMissPoint(2);" disabled>Team 2 Mistake
-			<span id="misspoint2" class="label label-danger">0</span>
-		</button>
 		<button id="buttonTurnT2" type="button" class="btn" onclick="turnOfTeam(2);">Switch to Team 2</button>
 
 		<BR /><BR />
-		
-		<div class="current-team-indicator">
-			<span>Current Team: </span>
-			<span id="currentTeam"></span>
+
+		<div class="team-info">
+			<div>
+				<span>Current Team: </span>
+				<span id="currentTeam"></span>
+			</div>
+			<div>
+				<span>Team 1 Misses: </span>
+				<span id="misspoint1"></span>
+			</div>
+			<div>
+				<span>Team 2 Misses: </span>
+				<span id="misspoint2"></span>
+			</div>
 		</div>
 
 		<BR /><BR />
-
-		<!--
-		<button type="button" class="btn btn-default" onclick="play_sound('ff-strike.wav');">Wrong Answer Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('dun.mp3');">BONUS answer Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('applause.mp3');">applause Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('yeah.ogg');">YEAH Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('boo.ogg');">BOO Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('clock.ogg');">CLOCK END Sound</button>
-		<button type="button" class="btn btn-default" onclick="play_sound('ticking_clock_10sec.mp3');">Tick	Sound</button>
-		<button type="button" class="btn btn-default" onclick="pause_sound();">Stop Sound</button>
-		<BR />
-		<BR />
-		-->
-
 
 		<h2>Q<span id="currentQ"></span>: <span id="question" class="label label-default">Open the game to reveal the first question</span></h2>
 
 		<h2>Answers:</h2>
 
 		<div id="answerInfo">
-			Answers will appear in here when the game is opened.
+			Answers will appear in here when the game is started.
 		</div>
 
 		<table id="tableAnswers" class="table" style="display: none;">
@@ -91,10 +81,8 @@
 
 		<BR />
 		<BR />
-		<!-- <button id="buttonAwardT1" type="button" class="btn btn-primary" onclick="calculatePoints(1);" disabled>Apply Points to Team 1</button> -->
-		<button id="buttonAwardT2" type="button" class="btn btn-primary" onclick="nextQuestion();" disabled>Next Question</button>
-		<button id="buttonFaceOffMiss" type="button" class="btn btn-danger" onclick="faceOffWrongAnswer()" disabled>Face-Off Miss</button>
-		<!-- <button id="buttonAwardT3" type="button" class="btn btn-primary" onclick="calculatePoints(2);" disabled>Apply Points to Team 2</button> -->
+		<button id="buttonNextQuestion" type="button" class="btn btn-primary" onclick="nextQuestion();" disabled>Next Question</button>
+		<button id="buttonMiss" type="button" class="btn btn-danger" onclick="miss()" disabled>Miss</button>
 		<BR />
 		<BR />
 		<div class="form-group row">
@@ -106,14 +94,6 @@
 				<h4 id="team2Label" class="team-label">Team 2 Score</h4>
 				<div id="team2POINT">0</div>
 			</div>
-			<!--<div class="col-xs-2">
-				<button id="buttonChangePOINT" type="button" class="btn btn-info" onclick="changeTeamPoint();">Adjust Scores</button>
-			</div>-->
-			<!--
-			<div class="col-xs-2">
-				<button id="buttonTurnExchange" type="button" class="btn btn-success" onclick="changeTurn();">Switch Active Team</button>
-			</div>
-			-->
 		</div>
 
 	</div>

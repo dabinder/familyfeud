@@ -9,18 +9,22 @@ var steal = false;
 var pointsAwarded = false;
 var faceOff = true;
 var faceOffMiss = false;
+var faceOffAnswered = false;
+var lastQuestion = false;
 
 var totalAnswers = 0;
 var successfulAnswers = 0;
 
 function start_game() {
 	document.getElementById("buttonStart").disabled = true;
-	document.getElementById("buttonAwardT2").disabled = false;
+	document.getElementById("buttonNextQuestion").disabled = true;
 	nextQuestion();
-	document.getElementById("buttonFaceOffMiss").disabled = false;
+	document.getElementById("buttonMiss").disabled = false;
 	document.getElementById("tableAnswers").classList.add("ready");
 	faceOff = true;
 	faceOffMiss = false;
+	faceOffAnswered = false;
+	lastQuestion = false;
 }
 
 function open_game_window() {
@@ -103,9 +107,9 @@ function nextQuestion() {
 	for (var i = table.rows.length - 1; i > 0; i--) {
 		table.deleteRow(i);
 	}
-	document.getElementById("buttonFaceOffMiss").disabled = true;
 	deleteMissPoint();
-	game.app.changeQuestion(() => document.getElementById("buttonAwardT2").disabled = true);
+	document.getElementById("buttonNextQuestion").disabled = true;
+	game.app.changeQuestion(() => lastQuestion = true);
 	if (!steal) {
 		changeTurn();
 	}
@@ -115,6 +119,8 @@ function nextQuestion() {
 	faceOff = false;
 	if (whichTeamTurn < 1) {
 		document.getElementById("tableAnswers").classList.remove("ready");
+	} else {
+		document.getElementById("buttonMiss").disabled = false;
 	}
 }
 
@@ -129,6 +135,8 @@ function calculatePoints(team) {
 
 	play_sound('ff_dogru.mp3');
 	pointsAwarded = true;
+	document.getElementById("buttonNextQuestion").disabled = lastQuestion;
+	document.getElementById("buttonMiss").disabled = true;
 }
 
 function GetQuestion(questionParam) {
@@ -161,9 +169,15 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 				successfulAnswers--;
 			}
 			let rank = this.dataset.answer;
-			game.app.showCard(rank, function() {
-				if (faceOff && (parseInt(rank) === 0 || faceOffMiss)) {
-					play_sound('ff_dogru.mp3');
+			game.app.showCard(rank, function () {
+				if (faceOff) {
+					if (parseInt(rank) === 0 || faceOffMiss) {
+						play_sound('ff_dogru.mp3');
+						document.getElementById("buttonNextQuestion").disabled = false;
+						document.getElementById("buttonMiss").disabled = true;
+					} else {
+						faceOffAnswered = true;
+					}
 				} else if (successfulAnswers == totalAnswers || steal) {
 					calculatePoints(whichTeamTurn);
 				}
@@ -187,13 +201,9 @@ function turnOfTeam(team) {
 		game.document.getElementById("awardTeam1").classList.add("active");
 		game.document.getElementById("team2").classList.remove("active");
 		game.document.getElementById("awardTeam2").classList.remove("active");
-		
+
 		document.getElementById("team1Label").classList.add("active");
 		document.getElementById("team2Label").classList.remove("active");
-
-		document.getElementById("buttonMistakeT1").disabled = false;
-
-		document.getElementById("buttonMistakeT2").disabled = true;
 	} else if (team == 2) {
 		game.document.getElementById("team2").classList.add("active");
 		game.document.getElementById("awardTeam2").classList.add("active");
@@ -202,13 +212,10 @@ function turnOfTeam(team) {
 
 		document.getElementById("team1Label").classList.remove("active");
 		document.getElementById("team2Label").classList.add("active");
-
-		document.getElementById("buttonMistakeT2").disabled = false;
-
-		document.getElementById("buttonMistakeT1").disabled = true;
 	}
 	document.getElementById("tableAnswers").classList.add("ready");
 	document.getElementById("currentTeam").textContent = team;
+	document.getElementById("buttonMiss").disabled = false;
 }
 
 function gameClosed() {
@@ -219,11 +226,10 @@ function gameClosed() {
 	document.getElementById("misspoint1").innerHTML = missPointTeam1;
 	missPointTeam1 = 0;
 	document.getElementById("misspoint2").innerHTML = missPointTeam1;
-	
+
 	document.getElementById("buttonClose").disabled = true;
-	document.getElementById("buttonMistakeT1").disabled = true;
-	document.getElementById("buttonMistakeT2").disabled = true;
-	document.getElementById("buttonAwardT2").disabled = true;
+	document.getElementById("buttonMiss").disabled = true;
+	document.getElementById("buttonNextQuestion").disabled = true;
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonOpen").disabled = false;
 	document.getElementById("tableAnswers").style.display = "none";
@@ -260,10 +266,45 @@ function changeTurn() {
 	}
 }
 
-function faceOffWrongAnswer() {
-	game.document.getElementById("misses").className = "active";
-	game.document.getElementById("missDisplay_1").classList.add("active");
-	play_sound('ff-strike.wav');
-	faceOffMiss = true;
-	setTimeout(() => game.document.getElementById("misses").classList.remove("active"), 1000);
+function miss() {
+	if (faceOff) {
+		game.document.getElementById("misses").className = "active";
+		game.document.getElementById("missDisplay_1").classList.add("active");
+		play_sound('ff-strike.wav');
+		faceOffMiss = true;
+		setTimeout(() => {
+			game.document.getElementById("misses").classList.remove("active");
+			if (faceOffAnswered) {
+				play_sound('ff_dogru.mp3');
+				document.getElementById("buttonNextQuestion").disabled = false;
+				document.getElementById("buttonMiss").disabled = true;
+			}
+		}, 1000);
+	} else {
+		if (whichTeamTurn == 1) {
+			if (missPointTeam1 < maxMiss) missPointTeam1++;
+			document.getElementById("misspoint1").innerHTML = missPointTeam1;
+		} else if (whichTeamTurn == 2) {
+			if (missPointTeam2 < maxMiss) missPointTeam2++;
+			document.getElementById("misspoint2").innerHTML = missPointTeam2;
+		} else {
+			return;
+		}
+
+		var counter = whichTeamTurn === 1 ? missPointTeam1 : missPointTeam2;
+		game.document.getElementById("misses").className = "active";
+		for (i = 1; i <= counter; i++) {
+			game.document.getElementById(`missDisplay_${i}`).classList.add("active");
+		}
+		setTimeout(() => {
+			game.document.getElementById("misses").className = "";
+			if (steal) {
+				calculatePoints(whichTeamTurn == 1 ? 2 : 1);
+			} else if (counter == maxMiss) {
+				changeTurn();
+				steal = true;
+			}
+		}, 1000);
+		play_sound('ff-strike.wav');
+	}
 }
