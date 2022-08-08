@@ -36,6 +36,7 @@ function start_game() {
 	document.getElementById("team2FaceOff").disabled = true;
 	document.getElementById("team1Start").disabled = true;
 	document.getElementById("team2Start").disabled = true;
+	document.getElementById("buttonFinish").disabled = false;
 	currentTeam = -1;
 	faceOff = true;
 	faceOffMiss = false;

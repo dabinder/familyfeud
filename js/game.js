@@ -1,8 +1,11 @@
 const shuffleQuestions = false;
 const minAnswers = 8;
+const lastQuestionBonus = 2;
 
 var team1 = window.opener.document.getElementById("team1NAME").value;
 var team2 = window.opener.document.getElementById("team2NAME").value;
+
+var lastQuestion = false;
 
 var app = {
 	version: 1,
@@ -166,8 +169,9 @@ var app = {
 
 		function tallyScore() {
 			if ($(this).data("flipped")) {
-				var value = $(this).find("b").html()
-				score += parseInt(value)
+				var value = parseInt($(this).find("b").html());
+				if (lastQuestion) value *= lastQuestionBonus;
+				score += value;
 			}
 		}
 		$.each(cards, tallyScore)
@@ -214,17 +218,19 @@ var app = {
 	changeQuestion: function (callback) {
 		app.makeQuestion(app.currentQ++);
 		if (app.currentQ == app.questions.length) {
+			lastQuestion = true;
 			callback();
 		}
 	},
 
 	// Inital function
 	init: function (round) {
-		app.jsonFile = `questions/round${round}.json?${Math.random()}`,
+		app.jsonFile = `questions/round${round}.json`,
 		$.getJSON(app.jsonFile, app.jsonLoaded)
 		app.board.find('#awardTeam1').on('click', app.awardPoints)
 		app.board.find('#awardTeam2').on('click', app.awardPoints)
 		window.opener.game_window_init_done();
+		lastQuestion = false;
 	}
 }
 
