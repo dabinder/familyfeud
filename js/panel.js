@@ -13,6 +13,7 @@ var pointsAwarded = false;
 var faceOff = false;
 var faceOffMiss = false;
 var faceOffAnswered = false;
+var faceOffCompleted = false;
 var lastQuestion = false;
 
 var currentRound = -1;
@@ -30,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function start_game() {
 	document.getElementById("buttonStart").disabled = true;
 	document.getElementById("buttonNextQuestion").disabled = true;
+	currentTeam = -1;
 	nextQuestion();
 	document.getElementById("buttonMiss").disabled = false;
 	document.getElementById("tableAnswers").classList.add("ready");
@@ -38,10 +40,10 @@ function start_game() {
 	document.getElementById("team1Start").disabled = true;
 	document.getElementById("team2Start").disabled = true;
 	document.getElementById("buttonFinish").disabled = false;
-	currentTeam = -1;
 	faceOff = true;
 	faceOffMiss = false;
 	faceOffAnswered = false;
+	faceOffCompleted = false;
 	faceOffWinner = -1;
 	startingTeam = -1;
 	lastQuestion = false;
@@ -217,7 +219,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 			let rank = this.dataset.answer;
 			game.app.showCard(rank, function () {
 				if (faceOff) {
-					if (parseInt(rank) === 0 || faceOffMiss) {
+					if (!faceOffCompleted && (parseInt(rank) === 0 || faceOffMiss)) {
 						completeFaceOff();
 					} else {
 						faceOffAnswered = true;
@@ -226,7 +228,7 @@ function GetAnswers(answers, currentQnumber, totalQnumber) {
 					calculatePoints(currentTeam);
 				}
 				
-				if (successfulAnswers == totalAnswers) {
+				if (successfulAnswers == totalAnswers && startingTeam != -1) {
 					document.getElementById("buttonNextQuestion").disabled = lastQuestion;
 				}
 			});
@@ -255,8 +257,8 @@ function setStartingTeam(team) {
 	startingTeam = team;
 	document.getElementById("team1Start").disabled = true;
 	document.getElementById("team2Start").disabled = true;
-	document.getElementById("buttonNextQuestion").disabled = false;
 	document.getElementById("currentTeam").textContent = team;
+	document.getElementById("buttonNextQuestion").disabled = (successfulAnswers != totalAnswers);
 }
 
 function turnOfTeam(team) {
@@ -279,7 +281,7 @@ function turnOfTeam(team) {
 		document.getElementById("team2Label").classList.add("active");
 	}
 	document.getElementById("tableAnswers").classList.add("ready");
-	document.getElementById("currentTeam").textContent = team;
+	document.getElementById("currentTeam").textContent = team == -1 ? "" : team;
 	document.getElementById("buttonMiss").disabled = false;
 }
 
@@ -381,6 +383,7 @@ function completeFaceOff() {
 	document.getElementById("buttonMiss").disabled = true;
 	document.getElementById("team1FaceOff").disabled = false;
 	document.getElementById("team2FaceOff").disabled = false;
+	faceOffCompleted = true;
 }
 
 function playMusic() {
