@@ -1,5 +1,6 @@
 const gameStartTimerInSeconds = 1;
 const maxMiss = 3;
+const allowMusic = true;
 
 var game = null;
 var currentTeam = -1;
@@ -47,7 +48,7 @@ function start_game() {
 }
 
 function open_game_window() {
-	play_sound('ff_dogru.mp3');
+	playMusic();
 	game = window.open('game.html', 'game', 'resizable=yes');
 	game.addEventListener("DOMContentLoaded", function () {
 		game.app.init(currentRound);
@@ -179,7 +180,7 @@ function calculatePoints(team) {
 		game.document.getElementById("awardTeam2").click();
 	}
 
-	play_sound('ff_dogru.mp3');
+	playMusic();
 	pointsAwarded = true;
 	document.getElementById("buttonMiss").disabled = true;
 }
@@ -376,8 +377,12 @@ function miss() {
 }
 
 function completeFaceOff() {
-	play_sound('ff_dogru.mp3');
+	playMusic();
 	document.getElementById("buttonMiss").disabled = true;
 	document.getElementById("team1FaceOff").disabled = false;
 	document.getElementById("team2FaceOff").disabled = false;
+}
+
+function playMusic() {
+	if (allowMusic)	play_sound('ff_dogru.mp3');
 }
